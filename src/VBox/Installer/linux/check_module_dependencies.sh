@@ -82,6 +82,20 @@ VERSIONED_PACKAGE=
 TOOLS="gcc make perl"
 TEST=
 UNIT_TEST=
+WSL_KERNEL=
+
+detect_wsl_kernel()
+{
+    # WSL markers can appear in either file depending on kernel build.
+    for wsl_file in /proc/sys/kernel/osrelease /proc/version; do
+        test -r "$wsl_file" || continue
+        wsl_text=$(cat "$wsl_file" 2>/dev/null)
+        case "${wsl_text}" in
+            *Microsoft*|*microsoft*|*WSL*) return 0;;
+        esac
+    done
+    return 1
+}
 
 case "${1}" in
 "")
@@ -90,6 +104,7 @@ case "${1}" in
     test -d "/lib/modules/`uname -r`/build/include" && HAVE_HEADERS=yes
     test -n "${HAVE_TOOLS}" && test -n "${HAVE_HEADERS}" && exit 0
     UNAME=`uname -r`
+    detect_wsl_kernel && WSL_KERNEL=yes
     for i in rpm dpkg; do
         for j in /var/lib/${i}/*; do
             test -e "${j}" || break
@@ -179,6 +194,15 @@ case "${UNIT_TEST}${BASE_EXPECTED}" in "")
     test -n "${HAVE_TOOLS}" ||
         echo "Please install the ${TOOLS} packages from your distribution." >&2
     test -n "${HAVE_HEADERS}" && exit 1
+    # Skip WSL messaging during tests.
+    if test -n "${WSL_KERNEL}" && test -z "${TEST}"; then
+        if test -f /sys/kernel/kheaders.tar.xz; then
+            echo "This appears to be a WSL kernel. /sys/kernel/kheaders.tar.xz provides only headers, not the full build tree required to build VirtualBox modules." >&2
+        else
+            echo "This appears to be a WSL kernel. Building VirtualBox modules is not supported." >&2
+        fi
+        echo "Please use a full kernel source tree matching your WSL kernel or run VirtualBox on a supported Linux host." >&2
+    fi
     echo "Please install the Linux kernel \"header\" files matching the current kernel" >&2
     echo "for adding new hardware support to the system." >&2
     if test -n "${BASE_PACKAGE}${VERSIONED_PACKAGE}"; then
