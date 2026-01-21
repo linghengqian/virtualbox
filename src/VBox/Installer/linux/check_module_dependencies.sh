@@ -202,6 +202,7 @@ case "${UNIT_TEST}${BASE_EXPECTED}" in "")
             echo "This appears to be a WSL kernel. Building VirtualBox modules is not supported." >&2
         fi
         echo "Please use a full kernel source tree matching your WSL kernel or run VirtualBox on a supported Linux host." >&2
+        echo "For WSL kernel header setup steps, see VBoxWslKernelHeaders.sh in the VirtualBox installation scripts directory." >&2
     fi
     echo "Please install the Linux kernel \"header\" files matching the current kernel" >&2
     echo "for adding new hardware support to the system." >&2
