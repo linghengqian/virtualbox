@@ -748,6 +748,15 @@ setup()
         --no-print-directory install 2>&1`; then
         log "Error building the module:"
         module_build_log "$myerr"
+        if [ "$wsl_kernel" = "true" ]; then
+            if [ -r "${INSTALL_DIR}/scripts/VBoxWslKernelHeaders.sh" ]; then
+                log "WSL2 detected: module builds can fail due to unsupported host constraints. See ${INSTALL_DIR}/scripts/VBoxWslKernelHeaders.sh for guidance."
+                echo "${SCRIPTNAME}: WSL2 detected; module builds can fail on unsupported host. See ${INSTALL_DIR}/scripts/VBoxWslKernelHeaders.sh." >&2
+            else
+                log "WSL2 detected: module builds can fail due to unsupported host constraints."
+                echo "${SCRIPTNAME}: WSL2 detected; module builds can fail on unsupported host." >&2
+            fi
+        fi
         failure "Look at $LOG to find out what went wrong"
     fi
     log "Building the net adapter module."
@@ -757,6 +766,15 @@ setup()
         --no-print-directory install 2>&1`; then
         log "Error building the module:"
         module_build_log "$myerr"
+        if [ "$wsl_kernel" = "true" ]; then
+            if [ -r "${INSTALL_DIR}/scripts/VBoxWslKernelHeaders.sh" ]; then
+                log "WSL2 detected: module builds can fail due to unsupported host constraints. See ${INSTALL_DIR}/scripts/VBoxWslKernelHeaders.sh for guidance."
+                echo "${SCRIPTNAME}: WSL2 detected; module builds can fail on unsupported host. See ${INSTALL_DIR}/scripts/VBoxWslKernelHeaders.sh." >&2
+            else
+                log "WSL2 detected: module builds can fail due to unsupported host constraints."
+                echo "${SCRIPTNAME}: WSL2 detected; module builds can fail on unsupported host." >&2
+            fi
+        fi
         failure "Look at $LOG to find out what went wrong"
     fi
     if test -e "$MODULE_SRC/vboxpci"; then
@@ -767,6 +785,15 @@ setup()
             --no-print-directory install 2>&1`; then
             log "Error building the module:"
             module_build_log "$myerr"
+            if [ "$wsl_kernel" = "true" ]; then
+                if [ -r "${INSTALL_DIR}/scripts/VBoxWslKernelHeaders.sh" ]; then
+                    log "WSL2 detected: module builds can fail due to unsupported host constraints. See ${INSTALL_DIR}/scripts/VBoxWslKernelHeaders.sh for guidance."
+                    echo "${SCRIPTNAME}: WSL2 detected; module builds can fail on unsupported host. See ${INSTALL_DIR}/scripts/VBoxWslKernelHeaders.sh." >&2
+                else
+                    log "WSL2 detected: module builds can fail due to unsupported host constraints."
+                    echo "${SCRIPTNAME}: WSL2 detected; module builds can fail on unsupported host." >&2
+                fi
+            fi
             failure "Look at $LOG to find out what went wrong"
         fi
     fi
