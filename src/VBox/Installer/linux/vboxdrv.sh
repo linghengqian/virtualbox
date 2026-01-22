@@ -178,12 +178,13 @@ fail_msg()
 warn_wsl_build_failure()
 {
     if [ "$wsl_kernel" = "true" ]; then
+        wsl_msg="WSL2 detected: module builds can fail due to unsupported host constraints."
         if [ -r "${INSTALL_DIR}/scripts/VBoxWslKernelHeaders.sh" ]; then
-            log "WSL2 detected: module builds can fail due to unsupported host constraints. See ${INSTALL_DIR}/scripts/VBoxWslKernelHeaders.sh for guidance."
-            echo "${SCRIPTNAME}: WSL2 detected; module builds can fail on unsupported host. See ${INSTALL_DIR}/scripts/VBoxWslKernelHeaders.sh." >&2
+            log "${wsl_msg} See ${INSTALL_DIR}/scripts/VBoxWslKernelHeaders.sh for guidance."
+            echo "${SCRIPTNAME}: ${wsl_msg} See ${INSTALL_DIR}/scripts/VBoxWslKernelHeaders.sh." >&2
         else
-            log "WSL2 detected: module builds can fail due to unsupported host constraints."
-            echo "${SCRIPTNAME}: WSL2 detected; module builds can fail on unsupported host." >&2
+            log "${wsl_msg}"
+            echo "${SCRIPTNAME}: ${wsl_msg}" >&2
         fi
     fi
 }
