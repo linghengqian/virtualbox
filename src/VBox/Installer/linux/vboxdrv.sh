@@ -708,6 +708,10 @@ cleanup()
 # setup_script
 setup()
 {
+    wsl_kernel=""
+    if grep -qi "microsoft" /proc/sys/kernel/osrelease /proc/version 2>/dev/null; then
+        wsl_kernel=1
+    fi
     begin_msg "Building VirtualBox kernel modules" console
     log "Building the main VirtualBox module."
 
@@ -726,6 +730,9 @@ setup()
         "${INSTALL_DIR}/check_module_dependencies.sh" || exit 1
         log "Error building the module:"
         module_build_log "$myerr"
+        if [ -n "$wsl_kernel" ]; then
+            log "WSL2 detected: module builds can fail due to unsupported host constraints. See ${INSTALL_DIR}/scripts/VBoxWslKernelHeaders.sh for guidance."
+        fi
         failure "Look at $LOG to find out what went wrong"
     fi
     log "Building the net filter module."
