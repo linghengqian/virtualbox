@@ -75,6 +75,6 @@ Detected WSL kernel version: ${KERNEL_VERSION}
    sudo ln -snf "\$HOME/wsl2-kernel-${WSL_BASE_VERSION}" "/lib/modules/${KERNEL_VERSION}/build"
 
    Or copy the prepared tree to a persistent location and link it (example):
-   sudo cp -a "\$HOME/wsl2-kernel-${WSL_BASE_VERSION}" "/usr/src/wsl2-kernel-${WSL_BASE_VERSION}"
+   sudo cp -r "\$HOME/wsl2-kernel-${WSL_BASE_VERSION}" "/usr/src/wsl2-kernel-${WSL_BASE_VERSION}"
    sudo ln -snf "/usr/src/wsl2-kernel-${WSL_BASE_VERSION}" "/lib/modules/${KERNEL_VERSION}/build"
 EOF
