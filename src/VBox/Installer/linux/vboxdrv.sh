@@ -177,7 +177,7 @@ fail_msg()
 
 warn_wsl_build_failure()
 {
-    if [ "$wsl_kernel" = "true" ]; then
+    if [ "$1" = "true" ]; then
         wsl_msg="WSL2 detected: module builds can fail due to unsupported host constraints."
         if [ -r "${INSTALL_DIR}/scripts/VBoxWslKernelHeaders.sh" ]; then
             log "${wsl_msg} See ${INSTALL_DIR}/scripts/VBoxWslKernelHeaders.sh for guidance."
@@ -744,7 +744,7 @@ setup()
         "${INSTALL_DIR}/check_module_dependencies.sh" || exit 1
         log "Error building the module:"
         module_build_log "$myerr"
-        warn_wsl_build_failure
+        warn_wsl_build_failure "$wsl_kernel"
         failure "Look at $LOG to find out what went wrong"
     fi
     log "Building the net filter module."
@@ -754,7 +754,7 @@ setup()
         --no-print-directory install 2>&1`; then
         log "Error building the module:"
         module_build_log "$myerr"
-        warn_wsl_build_failure
+        warn_wsl_build_failure "$wsl_kernel"
         failure "Look at $LOG to find out what went wrong"
     fi
     log "Building the net adapter module."
@@ -764,7 +764,7 @@ setup()
         --no-print-directory install 2>&1`; then
         log "Error building the module:"
         module_build_log "$myerr"
-        warn_wsl_build_failure
+        warn_wsl_build_failure "$wsl_kernel"
         failure "Look at $LOG to find out what went wrong"
     fi
     if test -e "$MODULE_SRC/vboxpci"; then
@@ -775,7 +775,7 @@ setup()
             --no-print-directory install 2>&1`; then
             log "Error building the module:"
             module_build_log "$myerr"
-            warn_wsl_build_failure
+            warn_wsl_build_failure "$wsl_kernel"
             failure "Look at $LOG to find out what went wrong"
         fi
     fi
