@@ -101,7 +101,7 @@ case "${1}" in
 "")
     # Return immediately successfully if everything is installed
     type ${TOOLS} >/dev/null 2>&1 && HAVE_TOOLS=yes
-    test -d "/lib/modules/`uname -r`/build/include" && HAVE_HEADERS=yes
+    test -f "/lib/modules/`uname -r`/build/Makefile" && HAVE_HEADERS=yes
     test -n "${HAVE_TOOLS}" && test -n "${HAVE_HEADERS}" && exit 0
     UNAME=`uname -r`
     detect_wsl_kernel && WSL_KERNEL=yes
@@ -197,7 +197,7 @@ case "${UNIT_TEST}${BASE_EXPECTED}" in "")
     # Skip WSL messaging during tests.
     if test -n "${WSL_KERNEL}" && test -z "${TEST}"; then
         if test -f /sys/kernel/kheaders.tar.xz; then
-            echo "This appears to be a WSL kernel. /sys/kernel/kheaders.tar.xz provides only headers, not the full build tree required to build VirtualBox modules." >&2
+            echo "This appears to be a WSL kernel. /sys/kernel/kheaders.tar.xz or \"make headers_install\" provide only headers, not the full build tree required to build VirtualBox modules." >&2
         else
             echo "This appears to be a WSL kernel. Building VirtualBox modules is not supported." >&2
         fi

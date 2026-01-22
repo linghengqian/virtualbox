@@ -29,7 +29,7 @@
 PATH=$PATH:/bin:/sbin:/usr/sbin
 
 USAGE_MESSAGE="Usage: $(basename "$0") [--help]
-Print WSL kernel header preparation steps for VirtualBox.
+Print WSL kernel build preparation steps for VirtualBox.
 This script only prints instructions and does not modify the system."
 
 case "${1}" in
@@ -48,24 +48,29 @@ fi
 PWD_EXAMPLE='$PWD'
 
 cat << EOF
-WSL kernel header preparation steps for VirtualBox:
+WSL kernel build preparation steps for VirtualBox:
 
 Detected WSL kernel version: ${KERNEL_VERSION}
 
-1) Download the matching WSL2 kernel source (example):
+1) Install the build dependencies (example for Ubuntu 24.04 WSL):
+   sudo apt update && sudo apt upgrade --assume-yes
+   sudo apt install --assume-yes build-essential flex bison dwarves libssl-dev \\
+     libelf-dev cpio qemu-utils
+
+2) Download the matching WSL2 kernel source (example):
    git clone --depth 1 --branch "linux-msft-wsl-${WSL_BASE_VERSION}" \\
      https://github.com/microsoft/WSL2-Linux-Kernel.git wsl2-kernel
 
-2) Enter the source tree and ensure the config matches the running kernel
+3) Enter the source tree and ensure the config matches the running kernel
    (example using /proc/config.gz when available; otherwise use the WSL2 kernel
-    tree config in arch/x86/configs/config-wsl):
+     tree config in arch/x86/configs/config-wsl):
    cd wsl2-kernel
    zcat /proc/config.gz > .config
 
-3) Prepare the kernel headers:
+4) Prepare the kernel build tree (headers_install alone is not enough):
    make prepare
    make modules_prepare
 
-4) Point the module build link at the prepared source tree (example):
+5) Point the module build link at the prepared source tree (example):
    sudo ln -snf "${PWD_EXAMPLE}" "/lib/modules/${KERNEL_VERSION}/build"
 EOF
