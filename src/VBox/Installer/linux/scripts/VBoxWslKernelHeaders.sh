@@ -76,8 +76,12 @@ Detected WSL kernel version: ${KERNEL_VERSION}
    (note: /lib is a symlink to /usr/lib on Ubuntu 24.04 due to usrmerge)
    sudo ln -snf "\$HOME/wsl2-kernel-${WSL_BASE_VERSION}" "/lib/modules/${KERNEL_VERSION}/build"
 
-   Or copy the prepared tree to a persistent location and link it (example):
+   Or copy the tree to a persistent location and run prepare there (example):
    sudo cp -r "\$HOME/wsl2-kernel-${WSL_BASE_VERSION}" "/usr/src/wsl2-kernel-${WSL_BASE_VERSION}"
+   cd "/usr/src/wsl2-kernel-${WSL_BASE_VERSION}"
+   sudo make olddefconfig
+   sudo make prepare
+   sudo make modules_prepare
    sudo ln -snf "/usr/src/wsl2-kernel-${WSL_BASE_VERSION}" "/lib/modules/${KERNEL_VERSION}/build"
    (the /usr/src directory name can be any descriptive name, as long as the
    path used in the ln command matches the cp destination)
