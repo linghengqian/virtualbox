@@ -59,18 +59,23 @@ Detected WSL kernel version: ${KERNEL_VERSION}
 
 2) Download the matching WSL2 kernel source (example):
    git clone --depth 1 --branch "linux-msft-wsl-${WSL_BASE_VERSION}" \\
-     https://github.com/microsoft/WSL2-Linux-Kernel.git wsl2-kernel
+     https://github.com/microsoft/WSL2-Linux-Kernel.git \\
+     "\$HOME/wsl2-kernel-${WSL_BASE_VERSION}"
 
 3) Enter the source tree and ensure the config matches the running kernel
-   (example using /proc/config.gz when available; otherwise use the WSL2 kernel
+    (example using /proc/config.gz when available; otherwise use the WSL2 kernel
      tree config in arch/x86/configs/config-wsl):
-   cd wsl2-kernel
+   cd "\$HOME/wsl2-kernel-${WSL_BASE_VERSION}"
    zcat /proc/config.gz > .config
 
 4) Prepare the kernel build tree (headers_install alone is not enough):
    make prepare
    make modules_prepare
 
-5) Point the module build link at the prepared source tree (example):
+5) Either point the module build link at the prepared source tree (example):
    sudo ln -snf "${PWD_EXAMPLE}" "/lib/modules/${KERNEL_VERSION}/build"
+
+   Or copy the prepared tree to a persistent location and link it (example):
+   sudo rsync -a --delete "${PWD_EXAMPLE}/" "/usr/src/wsl2-kernel-${WSL_BASE_VERSION}/"
+   sudo ln -snf "/usr/src/wsl2-kernel-${WSL_BASE_VERSION}" "/lib/modules/${KERNEL_VERSION}/build"
 EOF
