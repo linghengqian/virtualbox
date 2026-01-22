@@ -76,6 +76,6 @@ Detected WSL kernel version: ${KERNEL_VERSION}
    sudo ln -snf "${PWD_EXAMPLE}" "/lib/modules/${KERNEL_VERSION}/build"
 
    Or copy the prepared tree to a persistent location and link it (example):
-   sudo rsync -a --delete "${PWD_EXAMPLE}/" "/usr/src/wsl2-kernel-${WSL_BASE_VERSION}/"
+   sudo rsync -a "${PWD_EXAMPLE}/" "/usr/src/wsl2-kernel-${WSL_BASE_VERSION}/"
    sudo ln -snf "/usr/src/wsl2-kernel-${WSL_BASE_VERSION}" "/lib/modules/${KERNEL_VERSION}/build"
 EOF
