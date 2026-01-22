@@ -72,6 +72,7 @@ Detected WSL kernel version: ${KERNEL_VERSION}
    make modules_prepare
 
 5) Either point the module build link at the prepared source tree (example):
+   (note: /lib is a symlink to /usr/lib on Ubuntu 24.04 due to usrmerge)
    sudo ln -snf "\$HOME/wsl2-kernel-${WSL_BASE_VERSION}" "/lib/modules/${KERNEL_VERSION}/build"
 
    Or copy the prepared tree to a persistent location and link it (example):
