@@ -45,7 +45,6 @@ if test -z "${KERNEL_VERSION}"; then
 else
     WSL_BASE_VERSION="${KERNEL_VERSION%%-*}"
 fi
-PWD_EXAMPLE='$PWD'
 
 cat << EOF
 WSL kernel build preparation steps for VirtualBox:
