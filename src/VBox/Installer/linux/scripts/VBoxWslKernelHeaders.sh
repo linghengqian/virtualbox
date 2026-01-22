@@ -72,9 +72,11 @@ Detected WSL kernel version: ${KERNEL_VERSION}
    make modules_prepare
 
 5) Either point the module build link at the prepared source tree (example):
-   sudo ln -snf "\$HOME/wsl2-kernel-${WSL_BASE_VERSION}" "/lib/modules/${KERNEL_VERSION}/build"
+    sudo ln -snf "\$HOME/wsl2-kernel-${WSL_BASE_VERSION}" "/lib/modules/${KERNEL_VERSION}/build"
 
    Or copy the prepared tree to a persistent location and link it (example):
    sudo cp -r "\$HOME/wsl2-kernel-${WSL_BASE_VERSION}" "/usr/src/wsl2-kernel-${WSL_BASE_VERSION}"
    sudo ln -snf "/usr/src/wsl2-kernel-${WSL_BASE_VERSION}" "/lib/modules/${KERNEL_VERSION}/build"
+   (the /usr/src directory name can be any descriptive name, as long as the
+    /lib/modules/${KERNEL_VERSION}/build symlink matches it)
 EOF
