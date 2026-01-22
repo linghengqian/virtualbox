@@ -722,7 +722,7 @@ cleanup()
 # setup_script
 setup()
 {
-    wsl_kernel=
+    wsl_kernel=false
     if grep -qi "microsoft" /proc/sys/kernel/osrelease /proc/version 2>/dev/null; then
         wsl_kernel=true
     fi
