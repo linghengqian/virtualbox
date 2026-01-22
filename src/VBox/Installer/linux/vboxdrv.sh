@@ -708,9 +708,9 @@ cleanup()
 # setup_script
 setup()
 {
-    wsl_kernel=""
+    wsl_kernel=
     if grep -qi "microsoft" /proc/sys/kernel/osrelease /proc/version 2>/dev/null; then
-        wsl_kernel=1
+        wsl_kernel=true
     fi
     begin_msg "Building VirtualBox kernel modules" console
     log "Building the main VirtualBox module."
@@ -730,8 +730,14 @@ setup()
         "${INSTALL_DIR}/check_module_dependencies.sh" || exit 1
         log "Error building the module:"
         module_build_log "$myerr"
-        if [ -n "$wsl_kernel" ]; then
-            log "WSL2 detected: module builds can fail due to unsupported host constraints. See ${INSTALL_DIR}/scripts/VBoxWslKernelHeaders.sh for guidance."
+        if [ "$wsl_kernel" = "true" ]; then
+            if [ -r "${INSTALL_DIR}/scripts/VBoxWslKernelHeaders.sh" ]; then
+                log "WSL2 detected: module builds can fail due to unsupported host constraints. See ${INSTALL_DIR}/scripts/VBoxWslKernelHeaders.sh for guidance."
+                echo "${SCRIPTNAME}: WSL2 detected; module builds can fail on unsupported host. See ${INSTALL_DIR}/scripts/VBoxWslKernelHeaders.sh." >&2
+            else
+                log "WSL2 detected: module builds can fail due to unsupported host constraints."
+                echo "${SCRIPTNAME}: WSL2 detected; module builds can fail on unsupported host." >&2
+            fi
         fi
         failure "Look at $LOG to find out what went wrong"
     fi
