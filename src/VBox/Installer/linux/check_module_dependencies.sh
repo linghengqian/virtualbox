@@ -101,9 +101,9 @@ case "${1}" in
 "")
     # Return immediately successfully if everything is installed
     type ${TOOLS} >/dev/null 2>&1 && HAVE_TOOLS=yes
-    test -f "/lib/modules/`uname -r`/build/Makefile" && HAVE_HEADERS=yes
+    test -f "/lib/modules/$(uname -r)/build/Makefile" && HAVE_HEADERS=yes
     test -n "${HAVE_TOOLS}" && test -n "${HAVE_HEADERS}" && exit 0
-    UNAME=`uname -r`
+    UNAME=$(uname -r)
     detect_wsl_kernel && WSL_KERNEL=yes
     for i in rpm dpkg; do
         for j in /var/lib/${i}/*; do
