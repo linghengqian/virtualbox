@@ -78,5 +78,5 @@ Detected WSL kernel version: ${KERNEL_VERSION}
    sudo cp -r "\$HOME/wsl2-kernel-${WSL_BASE_VERSION}" "/usr/src/wsl2-kernel-${WSL_BASE_VERSION}"
    sudo ln -snf "/usr/src/wsl2-kernel-${WSL_BASE_VERSION}" "/lib/modules/${KERNEL_VERSION}/build"
    (the /usr/src directory name can be any descriptive name, as long as the
-    path used in the ln command matches the cp destination)
+   path used in the ln command matches the cp destination)
 EOF
