@@ -63,7 +63,7 @@ Detected WSL kernel version: ${KERNEL_VERSION}
 
 3) Enter the source tree and ensure the config matches the running kernel
    (example using /proc/config.gz when available; otherwise use the WSL2 kernel
-    tree config in arch/x86/configs/config-wsl):
+   tree config in arch/x86/configs/config-wsl):
    cd "\$HOME/wsl2-kernel-${WSL_BASE_VERSION}"
    zcat /proc/config.gz > .config
 
@@ -75,6 +75,6 @@ Detected WSL kernel version: ${KERNEL_VERSION}
    sudo ln -snf "\$HOME/wsl2-kernel-${WSL_BASE_VERSION}" "/lib/modules/${KERNEL_VERSION}/build"
 
    Or copy the prepared tree to a persistent location and link it (example):
-   sudo rsync -a "\$HOME/wsl2-kernel-${WSL_BASE_VERSION}/" "/usr/src/wsl2-kernel-${WSL_BASE_VERSION}/"
+   sudo cp -a "\$HOME/wsl2-kernel-${WSL_BASE_VERSION}" "/usr/src/wsl2-kernel-${WSL_BASE_VERSION}"
    sudo ln -snf "/usr/src/wsl2-kernel-${WSL_BASE_VERSION}" "/lib/modules/${KERNEL_VERSION}/build"
 EOF
