@@ -66,6 +66,7 @@ Detected WSL kernel version: ${KERNEL_VERSION}
    tree config in arch/x86/configs/config-wsl):
    cd "\$HOME/wsl2-kernel-${WSL_BASE_VERSION}"
    zcat /proc/config.gz > .config
+   make olddefconfig
 
 4) Prepare the kernel build tree (headers_install alone is not enough):
    make prepare
@@ -80,4 +81,8 @@ Detected WSL kernel version: ${KERNEL_VERSION}
    sudo ln -snf "/usr/src/wsl2-kernel-${WSL_BASE_VERSION}" "/lib/modules/${KERNEL_VERSION}/build"
    (the /usr/src directory name can be any descriptive name, as long as the
    path used in the ln command matches the cp destination)
+
+6) If /sbin/vboxconfig still fails, review /var/log/vbox-setup.log for the
+   specific compiler error. WSL2 is not a supported host, so module builds can
+   still fail even with a prepared kernel tree.
 EOF
