@@ -63,8 +63,8 @@ Detected WSL kernel version: ${KERNEL_VERSION}
      "\$HOME/wsl2-kernel-${WSL_BASE_VERSION}"
 
 3) Enter the source tree and ensure the config matches the running kernel
-    (example using /proc/config.gz when available; otherwise use the WSL2 kernel
-     tree config in arch/x86/configs/config-wsl):
+   (example using /proc/config.gz when available; otherwise use the WSL2 kernel
+    tree config in arch/x86/configs/config-wsl):
    cd "\$HOME/wsl2-kernel-${WSL_BASE_VERSION}"
    zcat /proc/config.gz > .config
 
