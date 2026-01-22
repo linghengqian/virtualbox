@@ -726,6 +726,10 @@ setup()
     if grep -qi "microsoft" /proc/sys/kernel/osrelease /proc/version 2>/dev/null; then
         wsl_kernel=true
     fi
+    if [ "$wsl_kernel" = "true" ]; then
+        fail_msg "WSL2 detected; kernel module builds are not supported on this host"
+        exit 1
+    fi
     begin_msg "Building VirtualBox kernel modules" console
     log "Building the main VirtualBox module."
 
